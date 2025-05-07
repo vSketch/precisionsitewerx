@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HLS Media Gallery</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #181717;
+        }
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+            gap: 20px;
+        }
+        .media-container {
+            background-color: #313030;
+            border-radius: 8px;
+            padding: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .media-container img, .media-container video {
+            width: 100%;
+            height: auto;
+            border-radius: 4px;
+        }
+        .download-btn {
+            font-size: .8rem;
+            padding: .5rem 1rem;
+            margin-block: 1rem;
+            display: flex;   
+            gap: 1rem;
+            align-items: center;
+            line-height: 1rem;
+            width: max-content;
+            border-radius: 30px;
+            border: 2px solid #e3e3e3;
+            color: #e3e3e3 !important;
+            background-color: transparent;
+            transition: all 250ms ease-in-out;
+            cursor: pointer;
+            text-decoration: none;
+        }
+        .download-btn:hover {
+            background-color: #e3e3e3;
+        }
+    </style>
+</head>
+<body>
+    <h1 style="color: #e3e3e3;">Media Gallery</h1>
+    <div id="gallery" class="gallery"></div>
+
+    <script>
+        // This array would typically be generated server-side
+        const mediaFiles = [
+            { name: 'image1.jpg', type: 'image' },
+            { name: 'image2.jpg', type: 'image' },
+            { name: 'MVI_3973_stab.mp4', type: 'video' },
+            { name: 'MVI_3974_stab.mp4', type: 'video' },
+            { name: 'MVI_3975.mov', type: 'video' },
+            { name: 'MVI_3976.mov', type: 'video' },
+            { name: 'hlsgrading.png', type: 'image' },
+            // Add more files as needed
+        ];
+
+        const gallery = document.getElementById('gallery');
+
+        mediaFiles.forEach(file => {
+            const container = document.createElement('div');
+            container.className = 'media-container';
+
+            let mediaElement;
+            if (file.type === 'image') {
+                mediaElement = document.createElement('img');
+                mediaElement.src = `../images/${file.name}`;
+                mediaElement.alt = file.name;
+            } else if (file.type === 'video') {
+                mediaElement = document.createElement('video');
+                mediaElement.src = `../images/${file.name}`;
+                mediaElement.controls = true;
+            }
+
+            const downloadBtn = document.createElement('a');
+            downloadBtn.href = `../images/${file.name}`;
+            downloadBtn.download = file.name;
+            downloadBtn.className = 'download-btn';
+            downloadBtn.textContent = `Download ${file.name}`;
+
+            container.appendChild(mediaElement);
+            container.appendChild(downloadBtn);
+            gallery.appendChild(container);
+        });
+    </script>
+</body>
+</html>
